@@ -23,7 +23,6 @@ suite('Functional Tests', function() {
         let created_by = 'Functional Test - Every field filled in';
         let assigned_to = 'Chai and Mocha';
         let status_text = 'In QA';
-        let date = new Date();
        chai.request(server)
         .post('/api/issues/test')
         .send({
@@ -47,15 +46,36 @@ suite('Functional Tests', function() {
         });
       });
       
-    //   test('Required fields filled in', function(done) {
-        
-    //   });
+      test('Required fields filled in', function(done) {
+        let issue_title = 'Title Required';
+        let issue_text = 'text required';
+        let created_by = 'Functional Test 2 - Required fields filled in';
+       chai.request(server)
+        .post('/api/issues/test')
+        .send({
+          issue_title: issue_title,
+          issue_text: issue_text,
+          created_by: created_by,
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.issue_title, issue_title, res.body.issue_title + " does not equal " + issue_title);
+          assert.equal(res.body.issue_text, issue_text, res.body.issue_text + " does not equal " + issue_text);
+          assert.equal(res.body.created_by, created_by, res.body.created_by + " does not equal " + created_by);
+          assert.equal(res.body.assigned_to, "", res.body.assigned_to + " does not equal ''");
+          assert.equal(res.body.status_text, "", res.body.status_text + " does not equal ''");
+          assert.equal(res.body.open, true, res.body.open + " is not equal to " + true);
+          assert.exists(res.body.created_on, "created_on date does not exist");
+          assert.exists(res.body.updated_on, "updated_on date does not exist");
+          done();
+        });
+      });
       
-    //   test('Missing required fields', function(done) {
+      // test('Missing required fields', function(done) {
         
-    //   });
+      // });
       
-    // });
+    });
     
     // suite('PUT /api/issues/{project} => text', function() {
       
@@ -71,8 +91,7 @@ suite('Functional Tests', function() {
         
     //   });
       
-    });
-    
+
     // suite('GET /api/issues/{project} => Array of objects with issue data', function() {
       
     //   test('No filter', function(done) {
