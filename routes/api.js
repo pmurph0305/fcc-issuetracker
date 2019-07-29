@@ -30,12 +30,9 @@ module.exports = function (app, db) {
       if (req.query.open) filter.open = Boolean(req.query.open);
       if (req.query.created_on) filter.created_on = new Date(Date.parse(req.query.created_on));
       if (req.query.updated_on) filter.updated_on = new Date(Date.parse(req.query.updated_on));
-      console.log("FILTER", filter);
       db.collection(project).find(filter).toArray().then(result => {
-        console.log(result);
         res.json(result);
       });
-
     })
     
     // US 2: I can POST /api/issues/{projectname} with form data containing

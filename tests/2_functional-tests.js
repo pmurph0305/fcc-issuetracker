@@ -13,6 +13,7 @@ var server = require('../server');
 
 chai.use(chaiHttp);
 
+// US 8: All 11 functional tests are complete and passing.
 suite('Functional Tests', function() {
     let id = '';
     let other_id = ''
