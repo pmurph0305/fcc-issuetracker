@@ -8,9 +8,7 @@
 'use strict';
 const ObjectID = require('mongodb').ObjectID;
 
-
 module.exports = function (app, db) { 
-
   // US 6: I can GET /api/issues/{projectname} for an array of all issues
   // on that specific project with all the information for each issue 
   // as was returned when posted.
@@ -87,7 +85,7 @@ module.exports = function (app, db) {
         if (req.body.assigned_to) newDoc.assigned_to = req.body.assigned_to;
         if (req.body.status_text) newDoc.status_text = req.body.status_text;
         // has own property as open is a bool.
-        if (req.body.hasOwnProperty('open')) newDoc.open = req.body.open; 
+        if (req.body.hasOwnProperty('open')) newDoc.open = Boolean(req.body.open === 'true'); 
         newDoc.updated_on = new Date();
         db.collection(project).findOneAndUpdate(
           { _id: ObjectID(req.body._id) },
@@ -122,5 +120,5 @@ module.exports = function (app, db) {
           }
         )
       }
-    });
+  });
 };

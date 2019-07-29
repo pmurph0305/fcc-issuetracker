@@ -19,7 +19,6 @@ suite('Functional Tests', function() {
     let other_id = ''
 
     suite('POST /api/issues/{project} => object with issue data', function() {
-      
       test('Every field filled in', function(done) {
         let issue_title = 'Title';
         let issue_text = 'text';
@@ -87,11 +86,9 @@ suite('Functional Tests', function() {
           done();
         });
       });
-      
     });
     
-    suite('PUT /api/issues/{project} => text', function() {
-      
+    suite('PUT /api/issues/{project} => text', function() {    
       test('No body', function(done) {
         chai.request(server)
           .put('/api/issues/test')
@@ -146,8 +143,7 @@ suite('Functional Tests', function() {
     });
       
 
-    suite('GET /api/issues/{project} => Array of objects with issue data', function() {
-      
+    suite('GET /api/issues/{project} => Array of objects with issue data', function() {     
       test('No filter', function(done) {
         chai.request(server)
         .get('/api/issues/test')
@@ -206,12 +202,10 @@ suite('Functional Tests', function() {
             assert.property(res.body[0], '_id');
             done();
           })
-      });
-      
+      });   
     });
     
-    suite('DELETE /api/issues/{project} => text', function() {
-      
+    suite('DELETE /api/issues/{project} => text', function() { 
       test('No _id', function(done) {
         chai.request(server)
         .delete('/api/issues/test')
@@ -235,7 +229,5 @@ suite('Functional Tests', function() {
           done();
         })
       });
-      
     });
-
 });
