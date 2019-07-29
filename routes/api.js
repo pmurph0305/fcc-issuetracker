@@ -10,6 +10,10 @@ const ObjectID = require('mongodb').ObjectID;
 
 
 module.exports = function (app, db) { 
+
+  //US 6: I can GET /api/issues/{projectname} for an array of all issues
+  // on that specific project with all the information for each issue 
+  // as was returned when posted.
   app.route('/api/issues/:project') 
     // .get(function (req, res){
     //   var project = req.params.project;
@@ -31,7 +35,7 @@ module.exports = function (app, db) {
         // (blank for optional no input) and also include created_on(date/time),
         // updated_on(date/time), open(boolean, true for open, false for closed), 
         // and _id.
-        db.collection('issues').insertOne({
+        db.collection(project).insertOne({
           issue_title: issue_title,
           issue_text: issue_text,
           created_by: created_by,
@@ -70,7 +74,7 @@ module.exports = function (app, db) {
         // has own property as open is a bool.
         if (req.body.hasOwnProperty('open')) newDoc.open = req.body.open; 
         newDoc.updated_on = new Date();
-        db.collection('issues').findOneAndUpdate(
+        db.collection(project).findOneAndUpdate(
           { _id: ObjectID(req.body._id) },
           { $set: newDoc },
           function(err, result) {
@@ -93,7 +97,7 @@ module.exports = function (app, db) {
       if (!req.body._id) {
         res.json({ message: "_id error" });
       } else {
-        db.collection('issues').findOneAndDelete(
+        db.collection(project).findOneAndDelete(
           { _id: ObjectID(req.body._id) },
           function(err, result) {
             if (err) res.json({ message: "could not delete " + req.body._id });
