@@ -17,64 +17,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function (app, db) {
 
-
-  // const CONNECTION_STRING = process.env.MONGO_URI;
-  // const client = new MongoClient(CONNECTION_STRING, { useNewUrlParser: true });
-  // client.connect(err => {
-  //   if (err) {
-  //     console.log("DB Error:"+ err);
-  //   } else {
-  //     console.log('db connected');
-  //     app.route('/api/issues/:project')
-  //   .post(function(req, res) {
-  //     console.log('post route');
-  //     var project = req.params.project;
-  //     let issue_title = req.body.issue_title;
-  //     let issue_text = req.body.issue_text;
-  //     let created_by = req.body.created_by;
-  //     if (!issue_title || !issue_text || !created_by) {
-  //       res.json("Missing required data. Please fill out title, text, and created by fields.")
-  //     } else {
-  //       // US 3: The object saved (and returned) will include all of those fields
-  //       // (blank for optional no input) and also include created_on(date/time),
-  //       // updated_on(date/time), open(boolean, true for open, false for closed), 
-  //       // and _id.
-  //       client.db('issuetracker').collection('issues').insertOne({
-  //           project: project,
-  //           issue_title: issue_title,
-  //           issue_text: issue_text,
-  //           created_by: created_by,
-  //           assigned_to: req.body.assigned_to || "",
-  //           status_text: req.body.status_text || "",
-  //           open: true,
-  //           created_on: new Date(),
-  //           updated_on: new Date(),
-  //         }, function(err, result) {
-  //           if (err) {
-  //             res.json("Database Error, unable to create new issue.");
-  //           } else {
-  //             // return the new document.
-  //             res.json(result.ops[0]);
-  //           }
-  //         })
-  //       }
-  //     });
-  //   }
-  // })
-  
-  
-
-  // MongoClient.connect(CONNECTION_STRING, function(err, client) {
-    
-  //   if (err) {
-  //     console.log("DB Error:" + err)
-  //   } else {
-  //     console.log("Connected to Database");
-  //     let db = client.db('issuetracker');
-    
-
-      app.route('/api/issues/:project')
-      
+      app.route('/api/issues/:project') 
         // .get(function (req, res){
         //   var project = req.params.project;
           
@@ -114,11 +57,6 @@ module.exports = function (app, db) {
             })
           }
         });
-  
-            
-  //         }
-
-  //       })
         
   //       .put(function (req, res){
   //         var project = req.params.project;

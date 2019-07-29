@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-MongoClient.connect(process.env.MONGO_URI, (err, client) => {
+MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true }, (err, client) => {
   if (err) console.log("DB Error:" + err);
   else {
     console.log("Database connected")
