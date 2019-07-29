@@ -5,18 +5,12 @@
 *
 *
 */
-
 'use strict';
-
-var expect = require('chai').expect;
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
-
-
+const ObjectID = require('mongodb').ObjectID;
 
 
 module.exports = function (app, db) {
-
+      
       app.route('/api/issues/:project') 
         // .get(function (req, res){
         //   var project = req.params.project;
@@ -64,12 +58,29 @@ module.exports = function (app, db) {
 
         .put(function (req, res){
           var project = req.params.project;
-          console.log(req.body);
           // empty object
           if (!Object.keys(req.body).length) {
             res.json({message: "no updated field sent"});
           } else {
-            res.json('')
+            // use an empty object and add updated fields to it so we don't add everything in req.body.
+            let newDoc = {};
+            if (req.body.issue_title) newDoc.issue_title = req.body.issue_title;
+            if (req.body.issue_text) newDoc.issue_text = req.body.issue_text;
+            if (req.body.created_by) newDoc.created_by = req.body.created_by;
+            if (req.body.assigned_to) newDoc.assigned_to = req.body.assigned_to;
+            if (req.body.status_text) newDoc.status_text = req.body.status_text;
+            if (req.body.open) newDoc.open = req.body.open;
+            newDoc.updated_on = new Date();
+            db.collection('issues').findOneAndUpdate(
+              { _id: ObjectID(req.body._id) },
+              { $set: newDoc },
+              function(err, result) {
+                if (err) {
+                  res.json({ message: 'could not update ' + req.body._id });
+                } else {
+                  res.json({ message: 'successfully updated' });
+                }
+            })
           }
         })
         

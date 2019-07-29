@@ -14,109 +14,113 @@ var server = require('../server');
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
-  
-    // suite('POST /api/issues/{project} => object with issue data', function() {
+    let id = '';
+
+    suite('POST /api/issues/{project} => object with issue data', function() {
       
-    //   test('Every field filled in', function(done) {
-    //     let issue_title = 'Title';
-    //     let issue_text = 'text';
-    //     let created_by = 'Functional Test - Every field filled in';
-    //     let assigned_to = 'Chai and Mocha';
-    //     let status_text = 'In QA';
-    //     chai.request(server)
-    //     .post('/api/issues/test')
-    //     .send({
-    //       issue_title: issue_title,
-    //       issue_text: issue_text,
-    //       created_by: created_by,
-    //       assigned_to: assigned_to,
-    //       status_text: status_text
-    //     })
-    //     .end(function(err, res){
-    //       assert.equal(res.status, 200);
-    //       assert.equal(res.body.issue_title, issue_title, res.body.issue_title + " does not equal " + issue_title);
-    //       assert.equal(res.body.issue_text, issue_text, res.body.issue_text + " does not equal " + issue_text);
-    //       assert.equal(res.body.created_by, created_by, res.body.created_by + " does not equal " + created_by);
-    //       assert.equal(res.body.assigned_to, assigned_to, res.body.assigned_to + " does not equal " + assigned_to);
-    //       assert.equal(res.body.status_text, status_text, res.body.status_text + " does not equal " + status_text);
-    //       assert.equal(res.body.open, true, res.body.open + " is not equal to " + true);
-    //       assert.exists(res.body.created_on, "created_on date does not exist");
-    //       assert.exists(res.body.updated_on, "updated_on date does not exist");
-    //       done();
-    //     });
-    //   });
+      test('Every field filled in', function(done) {
+        let issue_title = 'Title';
+        let issue_text = 'text';
+        let created_by = 'Functional Test - Every field filled in';
+        let assigned_to = 'Chai and Mocha';
+        let status_text = 'In QA';
+        chai.request(server)
+        .post('/api/issues/test')
+        .send({
+          issue_title: issue_title,
+          issue_text: issue_text,
+          created_by: created_by,
+          assigned_to: assigned_to,
+          status_text: status_text
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.issue_title, issue_title, res.body.issue_title + " does not equal " + issue_title);
+          assert.equal(res.body.issue_text, issue_text, res.body.issue_text + " does not equal " + issue_text);
+          assert.equal(res.body.created_by, created_by, res.body.created_by + " does not equal " + created_by);
+          assert.equal(res.body.assigned_to, assigned_to, res.body.assigned_to + " does not equal " + assigned_to);
+          assert.equal(res.body.status_text, status_text, res.body.status_text + " does not equal " + status_text);
+          assert.equal(res.body.open, true, res.body.open + " is not equal to " + true);
+          assert.exists(res.body.created_on, "created_on date does not exist");
+          assert.exists(res.body.updated_on, "updated_on date does not exist");
+          id = res.body._id;
+          done();
+        });
+      });
       
-    //   test('Required fields filled in', function(done) {
-    //     let issue_title = 'Title Required';
-    //     let issue_text = 'text required';
-    //     let created_by = 'Functional Test 2 - Required fields filled in';
-    //     chai.request(server)
-    //       .post('/api/issues/test')
-    //       .send({
-    //         issue_title: issue_title,
-    //         issue_text: issue_text,
-    //         created_by: created_by,
-    //     })
-    //     .end(function(err, res){
-    //       assert.equal(res.status, 200);
-    //       assert.equal(res.body.issue_title, issue_title, res.body.issue_title + " does not equal " + issue_title);
-    //       assert.equal(res.body.issue_text, issue_text, res.body.issue_text + " does not equal " + issue_text);
-    //       assert.equal(res.body.created_by, created_by, res.body.created_by + " does not equal " + created_by);
-    //       assert.equal(res.body.assigned_to, "", res.body.assigned_to + " does not equal ''");
-    //       assert.equal(res.body.status_text, "", res.body.status_text + " does not equal ''");
-    //       assert.equal(res.body.open, true, res.body.open + " is not equal to " + true);
-    //       assert.exists(res.body.created_on, "created_on date does not exist");
-    //       assert.exists(res.body.updated_on, "updated_on date does not exist");
-    //       done();
-    //     });
-    //   });
+      test('Required fields filled in', function(done) {
+        let issue_title = 'Title Required';
+        let issue_text = 'text required';
+        let created_by = 'Functional Test 2 - Required fields filled in';
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: issue_title,
+            issue_text: issue_text,
+            created_by: created_by,
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.issue_title, issue_title, res.body.issue_title + " does not equal " + issue_title);
+          assert.equal(res.body.issue_text, issue_text, res.body.issue_text + " does not equal " + issue_text);
+          assert.equal(res.body.created_by, created_by, res.body.created_by + " does not equal " + created_by);
+          assert.equal(res.body.assigned_to, "", res.body.assigned_to + " does not equal ''");
+          assert.equal(res.body.status_text, "", res.body.status_text + " does not equal ''");
+          assert.equal(res.body.open, true, res.body.open + " is not equal to " + true);
+          assert.exists(res.body.created_on, "created_on date does not exist");
+          assert.exists(res.body.updated_on, "updated_on date does not exist");
+          done();
+        });
+      });
       
-    //   test('Missing required fields', function(done) {
-    //     chai.request(server)
-    //       .post('/api/issues/test')
-    //       .send({
-    //     })
-    //     .end(function(err, res){
-    //       assert.equal(res.status, 200);
-    //       assert.equal(res.body.message, "Missing required data.")
-    //       done();
-    //     });
-    //   });
+      test('Missing required fields', function(done) {
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.message, "Missing required data.")
+          done();
+        });
+      });
       
-    // });
+    });
     
     suite('PUT /api/issues/{project} => text', function() {
       
-      test('No body', function(done) {
-        chai.request(server)
-          .put('/api/issues/test')
-          .send()
-          .end(function(err, res) {
-            assert.equal(res.status, 200);
-            assert.equal(res.body.message, "no updated field sent")
-            done();
-          });
-      });
+      // test('No body', function(done) {
+      //   chai.request(server)
+      //     .put('/api/issues/test')
+      //     .send()
+      //     .end(function(err, res) {
+      //       assert.equal(res.status, 200);
+      //       assert.equal(res.body.message, "no updated field sent")
+      //       done();
+      //     });
+      // });
 
       test('One field to update', function(done) {
-        let _id = '5d3f2bbba88a9a306cea6157';
         let issue_title = 'New title'
         chai.request(server)
           .put('/api/issues/test')
+          // uses id from previous tests.
           .send({
-            _id: _id,
+            _id: id,
             issue_title: issue_title
           })
           .end(function(err, res) {
             assert.equal(res.status, 200);
-            assert.equal(res.body.message, 'succesfully updated');
+            assert.equal(res.body.message, 'successfully updated');
             done();
           })
       });
       
-      // test('Multiple fields to update', function(done) {
-      //   done();
-      // });
+      test('Multiple fields to update', function(done) {
+
+        
+        done();
+      });
 
     });
       
