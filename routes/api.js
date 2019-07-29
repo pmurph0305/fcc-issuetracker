@@ -11,14 +11,32 @@ const ObjectID = require('mongodb').ObjectID;
 
 module.exports = function (app, db) { 
 
-  //US 6: I can GET /api/issues/{projectname} for an array of all issues
+  // US 6: I can GET /api/issues/{projectname} for an array of all issues
   // on that specific project with all the information for each issue 
   // as was returned when posted.
   app.route('/api/issues/:project') 
-    // .get(function (req, res){
-    //   var project = req.params.project;
-      
-    // })
+    .get(function (req, res){
+      var project = req.params.project;
+      // US 7: I can filter my get request by also passing along any field and value 
+      // in the query(ie. /api/issues/{project}?open=false). 
+      // I can pass along as many fields/values as I want.
+      let filter = {};
+      if (req.query._id) filter._id = ObjectID(req.query._id);
+      if (req.query.issue_title) filter.issue_title = req.query.issue_title;
+      if (req.query.issue_text) filter.issue_text = req.query.issue_text;
+      if (req.query.created_by) filter.created_by = req.query.created_by;
+      if (req.query.assigned_to) filter.assigned_to = req.query.assigned_to;
+      if (req.query.status_text) filter.status_text = req.query.status_text;
+      if (req.query.open) filter.open = Boolean(req.query.open);
+      if (req.query.created_on) filter.created_on = new Date(Date.parse(req.query.created_on));
+      if (req.query.updated_on) filter.updated_on = new Date(Date.parse(req.query.updated_on));
+      console.log("FILTER", filter);
+      db.collection(project).find(filter).toArray().then(result => {
+        console.log(result);
+        res.json(result);
+      });
+
+    })
     
     // US 2: I can POST /api/issues/{projectname} with form data containing
     // required issue_title, issue_text, created_by, 
