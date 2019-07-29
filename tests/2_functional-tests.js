@@ -117,11 +117,29 @@ suite('Functional Tests', function() {
       });
       
       test('Multiple fields to update', function(done) {
-
-        
-        done();
+        let issue_title = "issue_title example title"
+        let issue_text = "issue_text example text"
+        let created_by = "created_by example name"
+        let assigned_to = "asigned_to example name"
+        let status_text = "status_text example text"
+        let open = false;
+        chai.request(server)
+          .put('/api/issues/test')
+          .send({
+            _id: id,
+            issue_title: issue_title,
+            issue_text: issue_text,
+            created_by: created_by,
+            assigned_to: assigned_to,
+            status_text: status_text,
+            open: open,
+          })
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.body.message, 'successfully updated');
+            done();
+          })
       });
-
     });
       
 
@@ -157,16 +175,32 @@ suite('Functional Tests', function() {
       
     // });
     
-    // suite('DELETE /api/issues/{project} => text', function() {
+    suite('DELETE /api/issues/{project} => text', function() {
       
-    //   test('No _id', function(done) {
-        
-    //   });
+      test('No _id', function(done) {
+        chai.request(server)
+        .delete('/api/issues/test')
+        .send()
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.body.message, '_id error', res.body.message + " does not equal '_id error'");
+          done();
+        })
+      });
       
-    //   test('Valid _id', function(done) {
-        
-    //   });
+      test('Valid _id', function(done) {
+        chai.request(server)
+        .delete('/api/issues/test')
+        .send({
+          _id: id
+        })
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.body.message, 'deleted ' + id, res.body.message + " does not equal 'deleted " + id + "'")
+          done();
+        })
+      });
       
-    // });
+    });
 
 });
