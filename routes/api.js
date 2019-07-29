@@ -56,12 +56,21 @@ module.exports = function (app, db) {
               }
             })
           }
-        });
+        })
         
-  //       .put(function (req, res){
-  //         var project = req.params.project;
-          
-  //       })
+        // I can PUT /api/issues/{projectname} with a _id and any fields in the object with a value
+        // to object said object. Returned will be 'successfully updated' or 'could not update '+_id.
+        // This should always update updated_on. If no fields are sent return 'no updated field sent'.
+
+        .put(function (req, res){
+          var project = req.params.project;
+          console.log(req.body);
+          // empty object
+          if (!Object.keys(req.body).length) {
+            res.json({message: "no updated field sent"});
+          } else {
+          }
+        })
         
   //       .delete(function (req, res){
   //         var project = req.params.project;
