@@ -32,7 +32,7 @@ module.exports = function (app, db) {
           let issue_text = req.body.issue_text;
           let created_by = req.body.created_by;
           if (!issue_title || !issue_text || !created_by) {
-            res.json("Missing required data. Please fill out title, text, and created by fields.")
+            res.json({ message: "Missing required data." })
           } else {
             // US 3: The object saved (and returned) will include all of those fields
             // (blank for optional no input) and also include created_on(date/time),

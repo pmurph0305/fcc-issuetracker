@@ -23,7 +23,7 @@ suite('Functional Tests', function() {
         let created_by = 'Functional Test - Every field filled in';
         let assigned_to = 'Chai and Mocha';
         let status_text = 'In QA';
-       chai.request(server)
+        chai.request(server)
         .post('/api/issues/test')
         .send({
           issue_title: issue_title,
@@ -50,12 +50,12 @@ suite('Functional Tests', function() {
         let issue_title = 'Title Required';
         let issue_text = 'text required';
         let created_by = 'Functional Test 2 - Required fields filled in';
-       chai.request(server)
-        .post('/api/issues/test')
-        .send({
-          issue_title: issue_title,
-          issue_text: issue_text,
-          created_by: created_by,
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: issue_title,
+            issue_text: issue_text,
+            created_by: created_by,
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
@@ -71,9 +71,17 @@ suite('Functional Tests', function() {
         });
       });
       
-      // test('Missing required fields', function(done) {
-        
-      // });
+      test('Missing required fields', function(done) {
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.message, "Missing required data.")
+          done();
+        });
+      });
       
     });
     
