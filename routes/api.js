@@ -69,6 +69,7 @@ module.exports = function (app, db) {
           if (!Object.keys(req.body).length) {
             res.json({message: "no updated field sent"});
           } else {
+            res.json('')
           }
         })
         

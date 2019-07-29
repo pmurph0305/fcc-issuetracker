@@ -98,9 +98,21 @@ suite('Functional Tests', function() {
           });
       });
 
-      // test('One field to update', function(done) {
-      //   done();
-      // });
+      test('One field to update', function(done) {
+        let _id = '5d3f2bbba88a9a306cea6157';
+        let issue_title = 'New title'
+        chai.request(server)
+          .put('/api/issues/test')
+          .send({
+            _id: _id,
+            issue_title: issue_title
+          })
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.body.message, 'succesfully updated');
+            done();
+          })
+      });
       
       // test('Multiple fields to update', function(done) {
       //   done();
